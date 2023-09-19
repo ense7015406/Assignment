@@ -3,7 +3,7 @@ name: Integration Pipeline
 on:
   push:
     branches:
-      - main # Adjust the branch name as needed
+      - main
 
 jobs:
   build:
@@ -15,7 +15,7 @@ jobs:
 
       # Add your integration steps here
       - name: Install dependencies
-        run: npm install # Replace with your build and integration commands
+        run: npm ci
 
       - name: Run integration tests
         run: npm test
