@@ -1,9 +1,9 @@
-const express = require('express');
-const connectDB = require('./config/db');
-const cors = require('cors');
+const express = require("express");
+const connectDB = require("./config/db");
+const cors = require("cors");
 
 // routes
-const articles = require('./routes/api/article');
+const articles = require("./routes/api/article");
 
 const app = express();
 
@@ -16,10 +16,10 @@ app.use(cors({ origin: true, credentials: true }));
 // Init Middleware
 app.use(express.json({ extended: false }));
 
-app.get('/', (req, res) => res.send('Hello world!'));
+app.get("/", (req, res) => res.send("Hello world!"));
 
 // use Routes
-app.use('/api/article', articles);
+app.use("/api/article", articles);
 
 const port = process.env.PORT || 8082;
 
