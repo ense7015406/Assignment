@@ -60,7 +60,7 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data}) => (
 			<span className="anchor" key="filter-span">Hide Columns</span>
 			<ul className="items">
 				{headers.map((header, index) => (
-					<li><input type="checkbox" key={header.key} value={header.key} id={"" + index++}></input>{header.label}<br></br></li>
+					<li key={header.key}><input type="checkbox" key={header.key} value={header.key} id={"" + index++}></input>{header.label}<br></br></li>
 				))}
 			</ul>
 		</div>
