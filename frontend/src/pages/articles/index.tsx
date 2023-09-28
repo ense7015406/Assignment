@@ -1,5 +1,6 @@
 import { GetServerSideProps, NextPage } from "next";
 import SortableTable from "../../components/table/SortableTable";
+import { TRUE } from "sass";
 
 interface ArticlesInterface {
 	id: string;
@@ -24,6 +25,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		{ key: "claim", label: "Claim" },
 		{ key: "evidence", label: "Evidence" },
 	];
+
 
 	return (
 		<div className="container">
