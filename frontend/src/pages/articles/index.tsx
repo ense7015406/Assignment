@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import React, { useState } from "react";
-import SearchBar from "../../components/searchBar/SearchBar";
 import SortableTable from "../../components/table/SortableTable";
+import SearchArticles  from "../../components/searchBar/SearchBar";
 
 interface ArticlesInterface {
 	id: string;
@@ -32,27 +32,28 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 	const handleSearch = async (query: string) => {
 		try {
-			const response = await fetch(`/api/articles?q=${query}`);
+			const response = await fetch(`http://localhost:8082/api/article/search?q=${query}`);
 			if (response.ok) {
-				const data = await response.json();
-				setSearchResults(data);
-			}
+			const data = await response.json();
+			setSearchResults(data);
+		  }
 		} catch (error) {
-			console.error(error);
+		  console.error(error);
 		}
-	};
+	  };
+	  
 
 	return (
 		<div className="container">
-			<h1>Articles Index Page</h1>
-			<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-				<p>Page containing a table of articles:</p>
-				<SearchBar onSearch={handleSearch} />
-			</div>
-			<SortableTable headers={headers} data={articles} />
+		  <h1>Articles Index Page</h1>
+		  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+			<p>Page containing a table of articles:</p>
+			<SearchArticles onSearch={handleSearch} />
+		  </div>
+		  <SortableTable headers={headers} data={searchResults.length > 0 ? searchResults : articles} />
 		</div>
-	);
-};
+	  );
+	};
 
 export const getServerSideProps: GetServerSideProps<ArticlesProps> = async () => {
 	try {

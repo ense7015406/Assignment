@@ -1,23 +1,27 @@
-import { wrap } from "module";
 import React, { useState } from "react";
 
-interface SearchBarProps {
-	onSearch: (query: string) => void;
+interface SearchArticlesProps {
+  onSearch: (query: string) => void;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
-	const [searchTerm, setSearchTerm] = useState("");
+const SearchArticles: React.FC<SearchArticlesProps> = ({ onSearch }) => {
+  const [searchQuery, setSearchQuery] = useState("");
 
-	const handleSearch = () => {
-		onSearch(searchTerm);
-	};
+  const handleSearch = () => {
+    onSearch(searchQuery);
+  };
 
-	return (
-		<div>
-			<input type="text" placeholder="Search Articles" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} />
-			<button onClick={handleSearch}>Search</button>
-		</div>
-	);
+  return (
+    <div>
+      <input
+        type="text"
+        placeholder="Search articles"
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+      />
+      <button onClick={handleSearch}>Search</button>
+    </div>
+  );
 };
 
-export default SearchBar;
+export default SearchArticles;

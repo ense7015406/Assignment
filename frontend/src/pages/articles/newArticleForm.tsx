@@ -19,7 +19,7 @@ const NewDiscussion = () => {
 				source,
 				publication_year: pubYear,
 				doi,
-				summary,
+				summary,																				
 				linked_discussion: linkedDiscussion,
 			})
 		);
