@@ -5,25 +5,47 @@ const NewDiscussion = () => {
 	const [title, setTitle] = useState("");
 	const [authors, setAuthors] = useState<string[]>([]);
 	const [source, setSource] = useState("");
-	const [pubYear, setPubYear] = useState<number>(0);
+	const [pubyear, setPubYear] = useState<number>(0);
 	const [doi, setDoi] = useState("");
 	const [summary, setSummary] = useState("");
-	const [linkedDiscussion, setLinkedDiscussion] = useState("");
+
+	const formatAuthors = (authorsArray: string[]): string => {
+		return authorsArray.join(", ");
+	};
+
 	const submitNewArticle = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
-		console.log(
-			JSON.stringify({
-				title,
-				authors,
-				source,
-				publication_year: pubYear,
-				doi,
-				summary,
-				linked_discussion: linkedDiscussion,
-			})
-		);
+		const articleData = {
+			title,
+			authors: formatAuthors(authors),
+			source,
+			pubyear,
+			doi,
+			summary,
+		};
+
+		try {
+			const response = await fetch("http://localhost:8082/api/article", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(articleData),
+			});
+
+			if (response.ok) {
+				// Article was successfully added
+				console.log("Article added successfully");
+			} else {
+				// Error occurred while adding the article
+				console.error("Failed to add article");
+			}
+		} catch (error) {
+			console.error(error);
+		}
 	};
+
 	// Some helper methods for the authors array
 	const addAuthor = () => {
 		setAuthors(authors.concat([""]));
@@ -81,20 +103,16 @@ const NewDiscussion = () => {
 						setSource(event.target.value);
 					}}
 				/>
-				<label htmlFor="pubYear">Publication Year:</label>
+				<label htmlFor="pubyear">Publication Year:</label>
 				<input
 					className={formStyles.formItem}
 					type="number"
 					name="pubYear"
 					id="pubYear"
-					value={pubYear}
+					value={pubyear}
 					onChange={(event) => {
 						const val = event.target.value;
-						if (val === "") {
-							setPubYear(0);
-						} else {
-							setPubYear(parseInt(val));
-						}
+						setPubYear(parseInt(val));
 					}}
 				/>
 				<label htmlFor="doi">DOI:</label>
