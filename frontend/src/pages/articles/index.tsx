@@ -16,6 +16,7 @@ interface ArticlesInterface {
 type ArticlesProps = {
 	articles: ArticlesInterface[];
 };
+
 const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 	const headers: { key: keyof ArticlesInterface; label: string }[] = [
 		{ key: "title", label: "Title" },
@@ -27,14 +28,14 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		{ key: "evidence", label: "Evidence" },
 	];
 
-	//const [searchResults, setSearchResults] = useState<ArticlesProps[]>([]);
+	const [searchResults, setSearchResults] = useState<ArticlesProps[]>([]);
 
 	const handleSearch = async (query: string) => {
 		try {
 			const response = await fetch(`http://localhost:8082/api/article/search?q=${query}`);
 			if (response.ok) {
 				const data = await response.json();
-				//setSearchResults(data);
+				setSearchResults(data);
 			}
 		} catch (error) {
 			console.error(error);
@@ -46,9 +47,9 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 			<h1>Articles Index Page</h1>
 			<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 				<p>Page containing a table of articles:</p>
-				{/* <SearchArticles onSearch={handleSearch} /> */}
+				<SearchArticles onSearch={handleSearch} />
 			</div>
-			{/* <SortableTable headers={headers} data={searchResults.length > 0 ? searchResults : articles} /> */}
+			<SortableTable headers={headers} data={searchResults.length > 0 ? searchResults : articles} />
 		</div>
 	);
 };

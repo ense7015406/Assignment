@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const Article = require("../../models/Article");
 
 // Test route
 router.get("/test/article", (req, res) => {
