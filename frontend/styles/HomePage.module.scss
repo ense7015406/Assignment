@@ -1,0 +1,43 @@
+/* Home.module.scss */
+
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	text-align: center;
+	background-color: #f0f0f0; /* Background color for the entire container */
+}
+
+.home-title {
+	font-size: 2.5rem;
+	margin: 0.5rem 0;
+	color: #333; /* Header text color */
+}
+
+.subtitle {
+	font-size: 1.25rem;
+	margin: 0.5rem 0;
+	color: #555; /* Subtitle text color */
+}
+
+.button-container {
+	margin-top: 2rem;
+}
+
+.button {
+	display: inline-block;
+	padding: 1rem 2rem;
+	background-color: #007bff; /* Button background color */
+	color: #fff; /* Button text color */
+	text-decoration: none;
+	font-size: 1rem;
+	margin: 0.5rem;
+	border-radius: 0.25rem;
+	transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+	background-color: #0056b3; /* Hover background color */
+}
