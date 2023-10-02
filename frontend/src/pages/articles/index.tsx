@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import React, { useState } from "react";
 import SortableTable from "../../components/table/SortableTable";
-import SearchArticles  from "../../components/searchBar/SearchBar";
+import { TRUE } from "sass";
 
 interface ArticlesInterface {
 	id: string;
@@ -28,32 +28,14 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		{ key: "evidence", label: "Evidence" },
 	];
 
-	const [searchResults, setSearchResults] = useState<ArticlesProps[]>([]);
-
-	const handleSearch = async (query: string) => {
-		try {
-			const response = await fetch(`http://localhost:8082/api/article/search?q=${query}`);
-			if (response.ok) {
-			const data = await response.json();
-			setSearchResults(data);
-		  }
-		} catch (error) {
-		  console.error(error);
-		}
-	  };
-	  
-
 	return (
 		<div className="container">
-		  <h1>Articles Index Page</h1>
-		  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+			<h1>Articles Index Page</h1>
 			<p>Page containing a table of articles:</p>
-			<SearchArticles onSearch={handleSearch} />
-		  </div>
-		  <SortableTable headers={headers} data={searchResults.length > 0 ? searchResults : articles} />
+			<SortableTable headers={headers} data={articles} />
 		</div>
-	  );
-	};
+	);
+};
 
 export const getServerSideProps: GetServerSideProps<ArticlesProps> = async () => {
 	try {
