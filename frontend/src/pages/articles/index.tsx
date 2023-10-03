@@ -5,11 +5,11 @@ interface ArticlesInterface {
 	id: string;
 	title: string;
 	authors: string;
-	source: string;
 	pubyear: string;
+	volume: string;
+	number: string;
+	pages: string;
 	doi: string;
-	claim: string;
-	evidence: string;
 }
 type ArticlesProps = {
 	articles: ArticlesInterface[];
@@ -18,11 +18,11 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 	const headers: { key: keyof ArticlesInterface; label: string }[] = [
 		{ key: "title", label: "Title" },
 		{ key: "authors", label: "Authors" },
-		{ key: "source", label: "Source" },
 		{ key: "pubyear", label: "Publication Year" },
+		{ key: "volume", label: "Volume" },
+		{ key: "number", label: "Number" },
+		{ key: "pages", label: "Pages" },
 		{ key: "doi", label: "DOI" },
-		{ key: "claim", label: "Claim" },
-		{ key: "evidence", label: "Evidence" },
 	];
 
 	return (

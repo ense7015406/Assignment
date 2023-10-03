@@ -4,11 +4,11 @@ import formStyles from "../../../styles/Form.module.scss";
 const NewDiscussion = () => {
 	const [title, setTitle] = useState("");
 	const [authors, setAuthors] = useState<string[]>([]);
-	const [source, setSource] = useState("");
 	const [pubYear, setPubYear] = useState<number>(0);
+	const [volume, setVolume] = useState("");
+	const [number, setNumber] = useState("");
+	const [pages, setPages] = useState("");
 	const [doi, setDoi] = useState("");
-	const [summary, setSummary] = useState("");
-	const [linkedDiscussion, setLinkedDiscussion] = useState("");
 	const submitNewArticle = async (event: FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
@@ -16,11 +16,11 @@ const NewDiscussion = () => {
 			JSON.stringify({
 				title,
 				authors,
-				source,
 				publication_year: pubYear,
+				volume,
+				number,
+				pages,
 				doi,
-				summary,
-				linked_discussion: linkedDiscussion,
 			})
 		);
 	};
@@ -70,17 +70,6 @@ const NewDiscussion = () => {
 				<button onClick={() => addAuthor()} className={formStyles.buttonItem} style={{ marginLeft: "auto" }} type="button">
 					+
 				</button>
-				<label htmlFor="source">Source:</label>
-				<input
-					className={formStyles.formItem}
-					type="text"
-					name="source"
-					id="source"
-					value={source}
-					onChange={(event) => {
-						setSource(event.target.value);
-					}}
-				/>
 				<label htmlFor="pubYear">Publication Year:</label>
 				<input
 					className={formStyles.formItem}
@@ -97,6 +86,39 @@ const NewDiscussion = () => {
 						}
 					}}
 				/>
+				<label htmlFor="volume">Volume:</label>
+				<input
+					className={formStyles.formItem}
+					type="text"
+					name="volume"
+					id="volume"
+					value={volume}
+					onChange={(event) => {
+						setVolume(event.target.value);
+					}}
+				/>
+				<label htmlFor="number">Number:</label>
+				<input
+					className={formStyles.formItem}
+					type="text"
+					name="number"
+					id="number"
+					value={number}
+					onChange={(event) => {
+						setNumber(event.target.value);
+					}}
+				/>
+				<label htmlFor="pages">Pages:</label>
+				<input
+					className={formStyles.formItem}
+					type="text"
+					name="pages"
+					id="pages"
+					value={pages}
+					onChange={(event) => {
+						setPages(event.target.value);
+					}}
+				/>
 				<label htmlFor="doi">DOI:</label>
 				<input
 					className={formStyles.formItem}
@@ -108,8 +130,6 @@ const NewDiscussion = () => {
 						setDoi(event.target.value);
 					}}
 				/>
-				<label htmlFor="summary">Summary:</label>
-				<textarea className={formStyles.formTextArea} name="summary" value={summary} onChange={(event) => setSummary(event.target.value)} />
 				<button className={formStyles.formItem} type="submit">
 					Submit
 				</button>
