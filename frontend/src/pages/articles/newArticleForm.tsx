@@ -64,75 +64,49 @@ const NewDiscussion = () => {
 	};
 	// Return the full form
 	return (
-		<div className="container">
+		<div className="container" style={{ textAlign: "center" }}>
 			<h1>New Article</h1>
 			<form className={formStyles.form} onSubmit={submitNewArticle}>
-				<label htmlFor="title">Title:</label>
-				<input
-					className={formStyles.formItem}
-					type="text"
-					name="title"
-					id="title"
-					value={title}
-					onChange={(event) => {
-						setTitle(event.target.value);
-					}}
-				/>
-				<label htmlFor="author">Authors:</label>
-				{authors.map((author, index) => {
-					return (
-						<div key={`author ${index}`} className={formStyles.arrayItem}>
-							<input type="text" name="author" value={author} onChange={(event) => changeAuthor(index, event.target.value)} className={formStyles.formItem} />
-							<button onClick={() => removeAuthor(index)} className={formStyles.buttonItem} style={{ marginLeft: "3rem" }} type="button">
-								-
+				<div className={formStyles.formGroup}>
+					<label htmlFor="title">Title:</label>
+					<input type="text" name="title" id="title" value={title} onChange={(event) => setTitle(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="author">Authors:</label>
+					{authors.map((author, index) => (
+						<div key={`author ${index}`} className={formStyles.authorGroup}>
+							<input type="text" name="author" value={author} onChange={(event) => changeAuthor(index, event.target.value)} className={formStyles.formControl} />
+							<button onClick={() => removeAuthor(index)} className={formStyles.removeAuthor} type="button">
+								Remove
 							</button>
 						</div>
-					);
-				})}
-				<button onClick={() => addAuthor()} className={formStyles.buttonItem} style={{ marginLeft: "auto" }} type="button">
-					+
-				</button>
-				<label htmlFor="source">Source:</label>
-				<input
-					className={formStyles.formItem}
-					type="text"
-					name="source"
-					id="source"
-					value={source}
-					onChange={(event) => {
-						setSource(event.target.value);
-					}}
-				/>
-				<label htmlFor="pubyear">Publication Year:</label>
-				<input
-					className={formStyles.formItem}
-					type="number"
-					name="pubYear"
-					id="pubYear"
-					value={pubyear}
-					onChange={(event) => {
-						const val = event.target.value;
-						setPubYear(parseInt(val));
-					}}
-				/>
-				<label htmlFor="doi">DOI:</label>
-				<input
-					className={formStyles.formItem}
-					type="text"
-					name="doi"
-					id="doi"
-					value={doi}
-					onChange={(event) => {
-						setDoi(event.target.value);
-					}}
-				/>
-				<label htmlFor="summary">Summary:</label>
-				<textarea className={formStyles.formTextArea} name="summary" value={summary} onChange={(event) => setSummary(event.target.value)} />
-				<button className={formStyles.formItem} type="submit">
+					))}
+					<button onClick={() => addAuthor()} className={formStyles.addAuthor} type="button">
+						Add Author
+					</button>
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="source">Source:</label>
+					<input type="text" name="source" id="source" value={source} onChange={(event) => setSource(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="pubyear">Publication Year:</label>
+					<input type="number" name="pubYear" id="pubYear" value={pubyear} onChange={(event) => setPubYear(parseInt(event.target.value))} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="doi">DOI:</label>
+					<input type="text" name="doi" id="doi" value={doi} onChange={(event) => setDoi(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="summary">Summary:</label>
+					<textarea name="summary" value={summary} onChange={(event) => setSummary(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<button className={formStyles.submitButton} type="submit">
 					Submit
 				</button>
 			</form>
 		</div>
 	);
 };
+
 export default NewDiscussion;
