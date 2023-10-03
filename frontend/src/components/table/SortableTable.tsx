@@ -1,5 +1,7 @@
 import React from "react";
 import styles from "./SortableTable.module.scss";
+import CustomLink from "./CustomLinks";
+
 
 
 interface SortableTableProps {
@@ -59,36 +61,40 @@ const hideColumnFunction = (para: any) => {
   
   
 
-const SortableTable: React.FC<SortableTableProps> = ({ headers, data}) => (
+  const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
 	<div className={styles["table-container"]} id="table">
-		<div className="dropdown-check-list" key="filter" id="checklist" onChange={ () => hideColumnFunction("checklist")}>
-			<span className="anchor" key="filter-span">Hide Columns</span>
-			<ul className="items">
-				{headers.map((header, index) => (
-					<li key={header.key}><input type="checkbox" key={header.key} value={header.key} id={"" + index++}></input>{header.label}<br></br></li>
-				))}
-			</ul>
-		</div>
-		<table className={styles.table}>
-			<thead>
-				<tr>
-					{headers.map((header) => (
-						<th key={header.key}>{header.label}</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{data.map((row, i) => (
-					<tr key={i}>
-						{headers.map((header) => (
-							<td key={header.key}>{row[header.key]}</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
+	  <div className="dropdown-check-list" key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
+		<span className="anchor" key="filter-span">Hide Columns</span>
+		<ul className="items">
+		  {headers.map((header, index) => (
+			<li key={header.key}>
+			  <input type="checkbox" key={header.key} value={header.key} id={"" + index++} />
+			  {header.label}<br />
+			</li>
+		  ))}
+		</ul>
+	  </div>
+	  <table className={styles.table}>
+		<thead>
+		  <tr>{headers.map((header) => <th key={header.key}>{header.label}</th>)}</tr>
+		</thead>
+		<tbody>
+		  {data.map((row, i) => (
+			<tr key={i}>
+			  {headers.map((header) => (
+				<td key={header.key}>
+				  {header.key === "title" ? (
+					<CustomLink href={`/articles/${encodeURIComponent(row.title)}`}>{row[header.key]}</CustomLink>
+				  ) : (
+					row[header.key]
+				  )}
+				</td>
+			  ))}
+			</tr>
+		  ))}
+		</tbody>
+	  </table>
 	</div>
-	
-);
+  );
 
 export default SortableTable;
