@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./SortableTable.module.scss";
-import CustomLink from "./CustomLinks";
 
 interface SortableTableProps {
 	headers: { key: string; label: string }[];
