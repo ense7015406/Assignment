@@ -1,0 +1,82 @@
+/* SortableTable.module.scss */
+
+/* Define a local class selector for the table */
+.table {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: #ffffff;
+	border: 1px solid #dddddd;
+	border-radius: 4px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+	th,
+	td {
+		text-align: center;
+		padding: 12px;
+	}
+
+	th {
+		background-color: #f2f2f2;
+	}
+
+	tr:nth-child(even) {
+		background-color: #f2f2f2;
+	}
+
+	tr:hover {
+		background-color: #ddd;
+	}
+}
+
+/* Define a local class selector for the table container */
+.table-container {
+	overflow-x: auto; /* Add horizontal scroll if needed */
+}
+
+
+.dropdown-check-list .anchor{
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 50px 5px 10px;
+    border: 1px solid #ccc;
+}
+
+.dropdown-check-list .anchor:after {
+    position: absolute;
+    content: "";
+    border-left: 2px solid black;
+    padding: 5px;
+    right: 10px;
+    top: 20%;
+    -moz-transform: rotate(-135deg);
+    -ms-transform: rotate(-135deg);
+    -o-transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+
+.dropdown-check-list .anchor:active:after{
+   right: 8px;
+   top: 21%
+}
+
+.dropdown-check-list ul.items{
+    padding: 2px;
+    display: none;
+    margin: 0;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.dropdown-check-list ul.items li {
+    list-style: none;
+}
+
+.dropdown-check-list.visible .anchor{
+    color: #0094ff;
+}
+
+.dropdown-check-list.visible .items{
+    display: block;
+}
