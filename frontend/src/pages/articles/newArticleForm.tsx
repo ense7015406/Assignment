@@ -4,10 +4,12 @@ import formStyles from "../../../styles/Form.module.scss";
 const NewDiscussion = () => {
 	const [title, setTitle] = useState("");
 	const [authors, setAuthors] = useState<string[]>([]);
-	const [source, setSource] = useState("");
+	const [journal, setJournal] = useState("");
+	const [volume, setVolume] = useState("");
+	const [number, setNumber] = useState("");
+	const [pages, setPages] = useState("");
 	const [pubyear, setPubYear] = useState<number>(0);
 	const [doi, setDoi] = useState("");
-	const [summary, setSummary] = useState("");
 
 	const formatAuthors = (authorsArray: string[]): string => {
 		return authorsArray.join(", ");
@@ -19,10 +21,12 @@ const NewDiscussion = () => {
 		const articleData = {
 			title,
 			authors: formatAuthors(authors),
-			source,
+			journal,
+			volume,
+			number,
+			pages,
 			pubyear,
 			doi,
-			summary,
 		};
 
 		try {
@@ -86,8 +90,20 @@ const NewDiscussion = () => {
 					</button>
 				</div>
 				<div className={formStyles.formGroup}>
-					<label htmlFor="source">Source:</label>
-					<input type="text" name="source" id="source" value={source} onChange={(event) => setSource(event.target.value)} className={formStyles.formControl} />
+					<label htmlFor="journal">Journal:</label>
+					<input type="text" name="journal" id="journal" value={journal} onChange={(event) => setJournal(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="volume">Volume:</label>
+					<input type="text" name="volume" id="volume" value={volume} onChange={(event) => setVolume(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="number">Number:</label>
+					<input type="text" name="number" id="number" value={number} onChange={(event) => setNumber(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="pages">Pages:</label>
+					<input type="text" name="pages" id="pages" value={pages} onChange={(event) => setPages(event.target.value)} className={formStyles.formControl} />
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="pubyear">Publication Year:</label>
@@ -96,10 +112,6 @@ const NewDiscussion = () => {
 				<div className={formStyles.formGroup}>
 					<label htmlFor="doi">DOI:</label>
 					<input type="text" name="doi" id="doi" value={doi} onChange={(event) => setDoi(event.target.value)} className={formStyles.formControl} />
-				</div>
-				<div className={formStyles.formGroup}>
-					<label htmlFor="summary">Summary:</label>
-					<textarea name="summary" value={summary} onChange={(event) => setSummary(event.target.value)} className={formStyles.formControl} />
 				</div>
 				<button className={formStyles.submitButton} type="submit">
 					Submit

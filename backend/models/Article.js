@@ -9,7 +9,19 @@ const ArticleSchema = new mongoose.Schema({
 		type: String, // Assuming authors is an array of strings
 		required: true,
 	},
-	source: {
+	journal: {
+		type: String,
+		required: true,
+	},
+	volume: {
+		type: String,
+		required: true,
+	},
+	number: {
+		type: String,
+		required: true,
+	},
+	pages: {
 		type: String,
 		required: true,
 	},
@@ -20,13 +32,6 @@ const ArticleSchema = new mongoose.Schema({
 	doi: {
 		type: String,
 	},
-	summary: {
-		type: String,
-	},
-	// updated_date: {
-	// 	type: Date,
-	// 	default: Date.now,
-	// },
 });
 
 module.exports = Article = mongoose.model("Article", ArticleSchema);
