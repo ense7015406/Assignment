@@ -1,6 +1,10 @@
 const express = require("express");
+const multer = require('multer');
 const router = express.Router();
 const Article = require("../../models/Article");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 
 // Test route
 router.get("/test/article", (req, res) => {
@@ -41,6 +45,20 @@ router.post("/", async (req, res) => {
 		res.status(400).json({ error: "Unable to add this article" });
 	}
 });
+
+// Add a new article via bibtex upload
+router.post("/upload-bibtex", upload.single('bibtexFile') async (req, res) => {
+	try{
+		const bibtexFile = req.file;
+
+		if (!bibtexFile) {
+		return res.status(400).json({ error: "No BibTeX file uploaded" });
+		}
+	} catch(err) {
+		console.error(err);
+		res.status(400).json({ error: "Unable to add this article" });
+	}
+})
 
 // Update an article by ID
 router.put("/:id", async (req, res) => {

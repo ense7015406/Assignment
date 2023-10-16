@@ -30,28 +30,42 @@ const NewDiscussion = () => {
 			doi,
 		};
 
-		const formData = new FormData();
-		if (bibtexFile){
-			formData.append("bibtexFile", bibtexFile);
-			formData.append("articleData", JSON.stringify(articleData));
-		}
-
 		try {
-			const response = await fetch("http://localhost:8082/api/article", {
+			const response1 = await fetch("http://localhost:8082/api/article", {
 				method: "POST",
-				//headers: {
-				//	"Content-Type": "application/json",
-			//	},
-				body: formData,
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(articleData),
 			});
 
-			if (response.ok) {
+			if (response1.ok) {
 				// Article was successfully added
 				console.log("Article added successfully");
 			} else {
 				// Error occurred while adding the article
 				console.error("Failed to add article");
 			}
+
+			const formData = new FormData();
+			if(bibtexFile)
+			{
+				formData.append("bibtexFile", bibtexFile);
+			}
+
+			const response2 = await fetch("http://localhost:8082/api/upload-bibtex", {
+				method: "POST",
+				body: formData,
+			});
+
+			if (response2.ok) {
+			// BibTeX file was successfully uploaded
+			console.log("BibTeX file uploaded successfully");
+			} else {
+			// Error occurred while uploading the BibTeX file
+			console.error("Failed to upload BibTeX file");
+			}
+
 		} catch (error) {
 			console.error(error);
 		}
