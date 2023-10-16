@@ -31,21 +31,21 @@ const NewDiscussion = () => {
 		};
 
 		try {
-			const response1 = await fetch("http://localhost:8082/api/article", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(articleData),
-			});
+			//const response1 = await fetch("http://localhost:8082/api/article", {
+			//	method: "POST",
+			//	headers: {
+			//		"Content-Type": "application/json",
+			//	},
+			//	body: JSON.stringify(articleData),
+			//});
 
-			if (response1.ok) {
+			//if (response1.ok) {
 				// Article was successfully added
-				console.log("Article added successfully");
-			} else {
+			//	console.log("Article added successfully");
+			//} else {
 				// Error occurred while adding the article
-				console.error("Failed to add article");
-			}
+			//	console.error("Failed to add article");
+		//	}
 
 			const formData = new FormData();
 			if(bibtexFile)

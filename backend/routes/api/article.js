@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require('multer');
+const bibtexParser = require('bibtex-parser');
 const router = express.Router();
 const Article = require("../../models/Article");
 
@@ -47,13 +48,42 @@ router.post("/", async (req, res) => {
 });
 
 // Add a new article via bibtex upload
-router.post("/upload-bibtex", upload.single('bibtexFile') async (req, res) => {
-	try{
+router.post("/upload-bibtex", upload.single('bibtexFile'), async (req, res) => {
+	try {
 		const bibtexFile = req.file;
-
 		if (!bibtexFile) {
-		return res.status(400).json({ error: "No BibTeX file uploaded" });
+			return res.status(400).json({ error: "No BibTeX file uploaded" });
 		}
+		res.json({ msg: "BibTeX file uploaded successfully" });
+
+		//Parse bibtex data.
+		const bibData = bibtexParser(bibtexContent);
+
+		const title = bibData.entry?.title || '';
+		const authors = bibData.entry?.author || [];
+		const journal = bibData.entry?.journal || '';
+		const volume = bibData.entry?.volume || '';
+		const number = bibData.entry?.number || '';
+		const pages = bibData.entry?.pages || '';
+		const pubyear = bibData.entry?.year || '';
+		const doi = bibData.entry?.doi || '';
+
+		// Create a new Article object
+		const article = new Article({
+			title,
+			authors,
+			journal,
+			volume,
+			number,
+			pages,
+			pubyear,
+			doi,
+		});
+
+		console.log(article);
+
+		Article.create(article);
+
 	} catch(err) {
 		console.error(err);
 		res.status(400).json({ error: "Unable to add this article" });
