@@ -10,6 +10,7 @@ const NewDiscussion = () => {
 	const [pages, setPages] = useState("");
 	const [pubyear, setPubYear] = useState<number>(0);
 	const [doi, setDoi] = useState("");
+	const [bibtexFile, setBibtexFile] = useState<File | null>(null);
 
 	const formatAuthors = (authorsArray: string[]): string => {
 		return authorsArray.join(", ");
@@ -29,13 +30,19 @@ const NewDiscussion = () => {
 			doi,
 		};
 
+		const formData = new FormData();
+		if (bibtexFile){
+			formData.append("bibtexFile", bibtexFile);
+			formData.append("articleData", JSON.stringify(articleData));
+		}
+
 		try {
 			const response = await fetch("http://localhost:8082/api/article", {
 				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(articleData),
+				//headers: {
+				//	"Content-Type": "application/json",
+			//	},
+				body: formData,
 			});
 
 			if (response.ok) {
@@ -47,6 +54,12 @@ const NewDiscussion = () => {
 			}
 		} catch (error) {
 			console.error(error);
+		}
+	};
+
+	const handleBibtexFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+		if (event.target.files && event.target.files[0]) {
+		  setBibtexFile(event.target.files[0]);
 		}
 	};
 
@@ -70,7 +83,7 @@ const NewDiscussion = () => {
 	return (
 		<div className="container" style={{ textAlign: "center" }}>
 			<h1>New Article</h1>
-			<form className={formStyles.form} onSubmit={submitNewArticle}>
+			<form className={formStyles.form} encType="multipart/form-data" onSubmit={submitNewArticle}>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="title">Title:</label>
 					<input type="text" name="title" id="title" value={title} onChange={(event) => setTitle(event.target.value)} className={formStyles.formControl} />
@@ -116,6 +129,7 @@ const NewDiscussion = () => {
 				<button className={formStyles.submitButton} type="submit">
 					Submit
 				</button>
+				<input type="file" name="bibtexFile" accept=".bib" onChange={handleBibtexFileChange}></input>
 			</form>
 		</div>
 	);
