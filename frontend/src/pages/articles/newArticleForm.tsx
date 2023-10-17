@@ -41,6 +41,7 @@ const NewDiscussion = () => {
 			if (response.ok) {
 				// Article was successfully added
 				console.log("Article added successfully");
+				window.location.href = "http://localhost:3000/articles";
 				alert("Article added successfully");
 			} else {
 				// Error occurred while adding the article
