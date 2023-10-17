@@ -14,6 +14,9 @@ export default function Home() {
 				<li>
 					<Link href="/newArticleForm">Submit a new Article</Link>
 				</li>
+				<li>
+					<Link href="/moderateViewPage">Moderate Page</Link>
+				</li>
 			</ul>
 			<div className="content"></div>
 		</div>

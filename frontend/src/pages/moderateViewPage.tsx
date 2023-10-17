@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import React, { useState } from "react";
-import SortableTable from "../../components/table/SortableTable";
-import SearchArticles from "../../components/searchBar/SearchBar";
+import SortableTable from "../components/table/SortableTable";
+import SearchArticles from "../components/searchBar/SearchBar";
 
 interface ArticlesInterface {
 	id: string;
@@ -46,7 +46,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 	return (
 		<div className="container">
-			<h1>Articles Index Page</h1>
+			<h1>Moderater View</h1>
 
 			<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 				<p>Page containing a table of articles:</p>

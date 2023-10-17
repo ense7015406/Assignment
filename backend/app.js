@@ -4,6 +4,7 @@ const cors = require("cors");
 
 // routes
 const articles = require("./routes/api/article");
+const modarticles = require("./routes/api/modarticle");
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(express.json({ extended: false }));
 app.get("/", (req, res) => res.send("Hello world!"));
 
 // use Routes
-app.use("/api/article", articles);
+app.use("/api/", articles);
 
 const port = process.env.PORT || 8082;
 
