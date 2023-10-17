@@ -13,6 +13,7 @@ interface ArticlesInterface {
 	pages: string;
 	pubyear: string;
 	doi: string;
+	claim: string;
 }
 type ArticlesProps = {
 	articles: ArticlesInterface[];
@@ -28,6 +29,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		{ key: "pages", label: "Pages" },
 		{ key: "pubyear", label: "Publication Year" },
 		{ key: "doi", label: "DOI" },
+		{ key: "claim", label: "Claim" },
 	];
 
 	const [searchResults, setSearchResults] = useState<ArticlesProps[]>([]);

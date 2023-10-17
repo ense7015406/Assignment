@@ -32,6 +32,10 @@ const ModArticleSchema = new mongoose.Schema({
 	doi: {
 		type: String,
 	},
+	claim: {
+		type: String,
+		required: true,
+	},
 });
 
 module.exports = ModArticle = mongoose.model("ModArticle", ModArticleSchema);
