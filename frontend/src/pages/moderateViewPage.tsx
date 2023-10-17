@@ -34,7 +34,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 	const handleSearch = async (query: string) => {
 		try {
-			const response = await fetch(`http://localhost:8082/api/article/search?q=${query}`);
+			const response = await fetch(`http://localhost:8082/api/modarticle/search?q=${query}`);
 			if (response.ok) {
 				const data = await response.json();
 				setSearchResults(data);
@@ -59,7 +59,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 export const getServerSideProps: GetServerSideProps<ArticlesProps> = async () => {
 	try {
-		const response = await fetch("http://localhost:8082/api/article"); // Update the URL to match your API endpoint
+		const response = await fetch("http://localhost:8082/api/modarticle"); // Update the URL to match your API endpoint
 		if (!response.ok) {
 			throw new Error("Failed to fetch articles");
 		}

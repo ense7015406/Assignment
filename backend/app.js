@@ -21,6 +21,7 @@ app.get("/", (req, res) => res.send("Hello world!"));
 
 // use Routes
 app.use("/api/", articles);
+app.use("/api/", modarticles);
 
 const port = process.env.PORT || 8082;
 
