@@ -7,16 +7,17 @@ const PopulatedNavBar = () => {
 	return (
 		<NavBar>
 			<NavItem>SPEED</NavItem>
+			<NavItem dropdown route="/articles">
+				Userview <IoMdArrowDropdown />
+				<NavDropdown>
+					<NavItem route="/moderateViewPage">Moderate Page</NavItem>
+					<NavItem route="/articles">All Articles</NavItem>
+				</NavDropdown>
+			</NavItem>
 			<NavItem route="/" end>
 				Home
 			</NavItem>
-			<NavItem dropdown route="/articles">
-				Articles <IoMdArrowDropdown />
-				<NavDropdown>
-					<NavItem route="/articles">View articles</NavItem>
-					<NavItem route="/articles/newArticleForm">Submit new</NavItem>
-				</NavDropdown>
-			</NavItem>
+			<NavItem route="/articles/newArticleForm">New Article</NavItem>
 		</NavBar>
 	);
 };

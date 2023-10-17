@@ -5,11 +5,12 @@ const NewDiscussion = () => {
 	const [title, setTitle] = useState("");
 	const [authors, setAuthors] = useState<string[]>([]);
 	const [journal, setJournal] = useState("");
-	const [volume, setVolume] = useState("");
-	const [number, setNumber] = useState("");
-	const [pages, setPages] = useState("");
+	const [volume, setVolume] = useState<number>(0);
+	const [number, setNumber] = useState<number>(0);
+	const [pages, setPages] = useState<number>(0);
 	const [pubyear, setPubYear] = useState<number>(0);
 	const [doi, setDoi] = useState("");
+	const [claim, setClaim] = useState("");
 
 	const formatAuthors = (authorsArray: string[]): string => {
 		return authorsArray.join(", ");
@@ -27,10 +28,11 @@ const NewDiscussion = () => {
 			pages,
 			pubyear,
 			doi,
+			claim,
 		};
 
 		try {
-			const response = await fetch("http://localhost:8082/api/article", {
+			const response = await fetch("http://localhost:8082/api/modarticle", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -97,15 +99,15 @@ const NewDiscussion = () => {
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="volume">Volume:</label>
-					<input type="text" name="volume" id="volume" value={volume} onChange={(event) => setVolume(event.target.value)} className={formStyles.formControl} required/>
+					<input type="number" name="volume" id="volume" value={volume} onChange={(event) => setVolume(parseInt(event.target.value))} className={formStyles.formControl} />
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="number">Number:</label>
-					<input type="text" name="number" id="number" value={number} onChange={(event) => setNumber(event.target.value)} className={formStyles.formControl} required/>
+					<input type="number" name="number" id="number" value={number} onChange={(event) => setNumber(parseInt(event.target.value))} className={formStyles.formControl} />
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="pages">Pages:</label>
-					<input type="text" name="pages" id="pages" value={pages} onChange={(event) => setPages(event.target.value)} className={formStyles.formControl} required/>
+					<input type="number" name="pages" id="pages" value={pages} onChange={(event) => setPages(parseInt(event.target.value))} className={formStyles.formControl} />
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="pubyear">Publication Year:</label>
@@ -114,6 +116,10 @@ const NewDiscussion = () => {
 				<div className={formStyles.formGroup}>
 					<label htmlFor="doi">DOI:</label>
 					<input type="text" name="doi" id="doi" value={doi} onChange={(event) => setDoi(event.target.value)} className={formStyles.formControl} />
+				</div>
+				<div className={formStyles.formGroup}>
+					<label htmlFor="claim">Claim:</label>
+					<input type="text" name="claim" id="claim" value={claim} onChange={(event) => setClaim(event.target.value)} className={formStyles.formControl} />
 				</div>
 				<button className={formStyles.submitButton} type="submit">
 					Submit
