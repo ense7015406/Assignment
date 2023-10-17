@@ -43,9 +43,11 @@ const NewDiscussion = () => {
 			if (response.ok) {
 				// Article was successfully added
 				console.log("Article added successfully");
+				alert("Article added successfully");
 			} else {
 				// Error occurred while adding the article
 				console.error("Failed to add article");
+				alert("Something wrong, please try again!");
 			}
 		} catch (error) {
 			console.error(error);
@@ -75,13 +77,13 @@ const NewDiscussion = () => {
 			<form className={formStyles.form} onSubmit={submitNewArticle}>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="title">Title:</label>
-					<input type="text" name="title" id="title" value={title} onChange={(event) => setTitle(event.target.value)} className={formStyles.formControl} />
+					<input type="text" name="title" id="title" value={title} onChange={(event) => setTitle(event.target.value)} className={formStyles.formControl} required />
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="author">Authors:</label>
 					{authors.map((author, index) => (
 						<div key={`author ${index}`} className={formStyles.authorGroup}>
-							<input type="text" name="author" value={author} onChange={(event) => changeAuthor(index, event.target.value)} className={formStyles.formControl} />
+							<input type="text" name="author" value={author} onChange={(event) => changeAuthor(index, event.target.value)} className={formStyles.formControl} required/>
 							<button onClick={() => removeAuthor(index)} className={formStyles.removeAuthor} type="button">
 								Remove
 							</button>
@@ -93,7 +95,7 @@ const NewDiscussion = () => {
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="journal">Journal:</label>
-					<input type="text" name="journal" id="journal" value={journal} onChange={(event) => setJournal(event.target.value)} className={formStyles.formControl} />
+					<input type="text" name="journal" id="journal" value={journal} onChange={(event) => setJournal(event.target.value)} className={formStyles.formControl} required/>
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="volume">Volume:</label>
@@ -109,7 +111,7 @@ const NewDiscussion = () => {
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="pubyear">Publication Year:</label>
-					<input type="number" name="pubYear" id="pubYear" value={pubyear} onChange={(event) => setPubYear(parseInt(event.target.value))} className={formStyles.formControl} />
+					<input type="number" name="pubYear" id="pubYear" value={pubyear} onChange={(event) => setPubYear(parseInt(event.target.value))} className={formStyles.formControl} required/>
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="doi">DOI:</label>

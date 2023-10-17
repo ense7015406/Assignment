@@ -20,10 +20,13 @@ router.get("/article", async (req, res) => {
 
 // Search an article based on Title, Author and Pub Year
 router.get("/article/search", async (req, res) => {
+
 	const query = req.query.q; // Retrieve the search query from the request query parameters
 
 	try {
-		const searchResults = await Article.find({ title: { $regex: query, $options: "i" } });
+		const searchResults = await Article.find({
+			$or: [{ title: { $regex: query, $options: "i" } }, { authors: { $regex: query, $options: "i" } }, { pubyear: { $regex: query, $options: "i" } }],
+		});
 		res.json(searchResults);
 	} catch (err) {
 		console.error(err);

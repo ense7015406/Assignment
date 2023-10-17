@@ -6,6 +6,18 @@ interface SortableTableProps {
 	data: any[];
 }
 
+const showCheckBoxes = (id : any) =>{
+	var dropdown = document.getElementById(id);
+	if(dropdown != null)
+	{
+		var checkboxes = dropdown.querySelector("ul") as HTMLElement;
+		if(checkboxes != null)
+		{
+			checkboxes.style.display = checkboxes.style.display === "block" ? "none" : "block";
+		}
+	}
+}
+
 const hideColumnFunction = (para: any) => {
 	const checklist = document.getElementById(para);
 	let array: string[] = [];
@@ -93,11 +105,11 @@ const sortByColumn = (para: number) => {
 
 const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
 	<div className={styles["table-container"]} id="table">
-		<div className="dropdown-check-list" key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
-			<span className="anchor" key="filter-span">
+		<div className={styles["dropdown-check-list"]} key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
+			<span className={styles["anchor"]} key="filter-span" onClick={()=> showCheckBoxes("checklist")}>
 				Hide Columns
 			</span>
-			<ul className="items">
+			<ul className={styles["items"]} >
 				{headers.map((header, index) => (
 					<li key={header.key}>
 						<input type="checkbox" key={header.key} value={header.key} id={"" + index++} />
