@@ -117,7 +117,7 @@ const NewDiscussion = () => {
 				</div>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="claim">Claim:</label>
-					<input type="text" name="claim" id="claim" value={doi} onChange={(event) => setClaim(event.target.value)} className={formStyles.formControl} />
+					<input type="text" name="claim" id="claim" value={claim} onChange={(event) => setClaim(event.target.value)} className={formStyles.formControl} />
 				</div>
 				<button className={formStyles.submitButton} type="submit">
 					Submit
