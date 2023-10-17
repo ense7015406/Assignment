@@ -30,7 +30,7 @@ const NewDiscussion = () => {
 		};
 
 		try {
-			const response = await fetch("http://localhost:8082/api/article", {
+			const response = await fetch("http://localhost:8082/api/modarticle", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
