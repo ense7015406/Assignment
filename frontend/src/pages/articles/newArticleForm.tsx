@@ -31,31 +31,35 @@ const NewDiscussion = () => {
 		};
 
 		try {
-			//const response1 = await fetch("http://localhost:8082/api/article", {
-			//	method: "POST",
-			//	headers: {
-			//		"Content-Type": "application/json",
-			//	},
-			//	body: JSON.stringify(articleData),
-			//});
+		/*	const response1 = await fetch("http://localhost:8082/api/article", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(articleData),
+			});
 
-			//if (response1.ok) {
+			if (response1.ok) {
 				// Article was successfully added
-			//	console.log("Article added successfully");
-			//} else {
+				console.log("Article added successfully");
+			} else {
 				// Error occurred while adding the article
-			//	console.error("Failed to add article");
-		//	}
+				console.error("Failed to add article");
+			}*/
 
-			const formData = new FormData();
+			let bibtexContent;
 			if(bibtexFile)
 			{
-				formData.append("bibtexFile", bibtexFile);
+				bibtexContent = await bibtexFile.text();
 			}
+			console.log(bibtexContent);
 
-			const response2 = await fetch("http://localhost:8082/api/upload-bibtex", {
+			const response2 = await fetch("http://localhost:8082/api/article/upload-bibtex", {
 				method: "POST",
-				body: formData,
+				headers: {
+					"Content-Type": "text/plain", 
+				},
+				body: bibtexContent,
 			});
 
 			if (response2.ok) {
@@ -97,7 +101,7 @@ const NewDiscussion = () => {
 	return (
 		<div className="container" style={{ textAlign: "center" }}>
 			<h1>New Article</h1>
-			<form className={formStyles.form} encType="multipart/form-data" onSubmit={submitNewArticle}>
+			<form className={formStyles.form} onSubmit={submitNewArticle}>
 				<div className={formStyles.formGroup}>
 					<label htmlFor="title">Title:</label>
 					<input type="text" name="title" id="title" value={title} onChange={(event) => setTitle(event.target.value)} className={formStyles.formControl} />
