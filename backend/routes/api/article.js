@@ -18,12 +18,14 @@ router.get("/", async (req, res) => {
 	}
 });
 
-// Get a single article by ID
+// Get articles by search query (across multiple fields)
 router.get("/search", async (req, res) => {
 	const query = req.query.q; // Retrieve the search query from the request query parameters
 
 	try {
-		const searchResults = await Article.find({ title: { $regex: query, $options: "i" } });
+		const searchResults = await Article.find({
+			$or: [{ title: { $regex: query, $options: "i" } }, { authors: { $regex: query, $options: "i" } }, { pubyear: { $regex: query, $options: "i" } }],
+		});
 		res.json(searchResults);
 	} catch (err) {
 		console.error(err);
