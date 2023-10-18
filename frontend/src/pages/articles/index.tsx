@@ -7,7 +7,10 @@ interface ArticlesInterface {
 	id: string;
 	title: string;
 	authors: string;
-	source: string;
+	journal: string;
+	volume: string;
+	number: string;
+	pages: string;
 	pubyear: string;
 	doi: string;
 	claim: string;
@@ -20,7 +23,10 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 	const headers: { key: keyof ArticlesInterface; label: string }[] = [
 		{ key: "title", label: "Title" },
 		{ key: "authors", label: "Authors" },
-		{ key: "source", label: "Source" },
+		{ key: "journal", label: "Journal" },
+		{ key: "volume", label: "Volume" },
+		{ key: "number", label: "Number" },
+		{ key: "pages", label: "Pages" },
 		{ key: "pubyear", label: "Publication Year" },
 		{ key: "doi", label: "DOI" },
 		{ key: "claim", label: "Claim" },
