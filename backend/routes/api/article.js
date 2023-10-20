@@ -8,7 +8,7 @@ router.get("/test/article", (req, res) => {
 });
 
 // Get all articles
-router.get("/", async (req, res) => {
+router.get("/article", async (req, res) => {
 	try {
 		const articles = await Article.find();
 		res.json(articles);
@@ -18,8 +18,9 @@ router.get("/", async (req, res) => {
 	}
 });
 
-// Get articles by search query (across multiple fields)
-router.get("/search", async (req, res) => {
+// Search an article based on Title, Author and Pub Year
+router.get("/article/search", async (req, res) => {
+
 	const query = req.query.q; // Retrieve the search query from the request query parameters
 
 	try {
@@ -34,7 +35,7 @@ router.get("/search", async (req, res) => {
 });
 
 // Add a new article
-router.post("/", async (req, res) => {
+router.post("/article/", async (req, res) => {
 	try {
 		const article = await Article.create(req.body);
 		res.json({ msg: "Article added successfully", article });
@@ -43,33 +44,4 @@ router.post("/", async (req, res) => {
 		res.status(400).json({ error: "Unable to add this article" });
 	}
 });
-
-// Update an article by ID
-router.put("/:id", async (req, res) => {
-	try {
-		const article = await Article.findByIdAndUpdate(req.params.id, req.body);
-		if (!article) {
-			return res.status(404).json({ error: "No article found" });
-		}
-		res.json({ msg: "Updated successfully", article });
-	} catch (err) {
-		console.error(err);
-		res.status(400).json({ error: "Unable to update the article" });
-	}
-});
-
-// Delete an article by ID
-router.delete("/:id", async (req, res) => {
-	try {
-		const article = await Article.findByIdAndRemove(req.params.id);
-		if (!article) {
-			return res.status(404).json({ error: "No article found" });
-		}
-		res.json({ msg: "Article entry deleted successfully" });
-	} catch (err) {
-		console.error(err);
-		res.status(500).json({ error: "An error occurred while deleting the article" });
-	}
-});
-
 module.exports = router;

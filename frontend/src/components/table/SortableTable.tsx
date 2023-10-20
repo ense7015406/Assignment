@@ -3,7 +3,7 @@ import styles from "./SortableTable.module.scss";
 
 interface SortableTableProps {
 	headers: { key: string; label: string }[];
-	data: any[]
+	data: any[];
 }
 
 const showCheckBoxes = (id : any) =>{
@@ -69,23 +69,19 @@ const hideColumnFunction = (para: any) => {
 };
 
 let sortByColumnNumber: number;
-const sortByColumn = (para : number) => {
-	if(sortByColumnNumber === para)
-	{
+const sortByColumn = (para: number) => {
+	if (sortByColumnNumber === para) {
 		location.reload();
 	}
 	const table = document.getElementById("tableContent") as HTMLTableElement;
 	let i, x, y;
 	let rows: HTMLCollectionOf<HTMLTableRowElement>;
 	let switchFlag = true;
-	while(switchFlag)
-	{
+	while (switchFlag) {
 		switchFlag = false;
 		let shouldSwitch = false;
 		rows = table.rows;
-		for(i = 1; i < rows.length - 1; i++)
-		{
-			
+		for (i = 1; i < rows.length - 1; i++) {
 			x = rows[i].getElementsByTagName("TD")[para];
 			y = rows[i + 1].getElementsByTagName("TD")[para];
 
@@ -101,7 +97,7 @@ const sortByColumn = (para : number) => {
 			and mark that a switch has been done:*/
 			rows[i].parentNode?.insertBefore(rows[i + 1], rows[i]);
 			switchFlag = true;
-		}	
+		}
 	}
 
 	sortByColumnNumber = para;
@@ -127,7 +123,9 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
 			<thead>
 				<tr>
 					{headers.map((header, index) => (
-					<th key={header.key} id={"" + index} onClick={() => sortByColumn(index)}>{header.label}</th>
+						<th key={header.key} id={"" + index} onClick={() => sortByColumn(index)}>
+							{header.label}
+						</th>
 					))}
 				</tr>
 			</thead>

@@ -1,7 +1,7 @@
 import { GetServerSideProps, NextPage } from "next";
 import React, { useState } from "react";
-import SortableTable from "../../components/table/SortableTable";
-import SearchArticles from "../../components/searchBar/SearchBar";
+import SortableTable from "../components/table/SortableTable";
+import SearchArticles from "../components/searchBar/SearchBar";
 
 interface ArticlesInterface {
 	id: string;
@@ -32,11 +32,11 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		{ key: "claim", label: "Claim" },
 	];
 
-	const [searchResults, setSearchResults] = useState<ArticlesInterface[]>([]); // Changed the type to match your data structure
+	const [searchResults, setSearchResults] = useState<ArticlesProps[]>([]);
 
 	const handleSearch = async (query: string) => {
 		try {
-			const response = await fetch(`http://localhost:8082/api/article/search?q=${query}`);
+			const response = await fetch(`http://localhost:8082/api/modarticle/search?q=${query}`);
 			if (response.ok) {
 				const data = await response.json();
 				setSearchResults(data);
@@ -48,7 +48,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 	return (
 		<div className="container">
-			<h1>Articles Index Page</h1>
+			<h1>Moderater View</h1>
 
 			<div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
 				<p>Page containing a table of articles:</p>
@@ -61,7 +61,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 export const getServerSideProps: GetServerSideProps<ArticlesProps> = async () => {
 	try {
-		const response = await fetch("http://localhost:8082/api/article"); // Update the URL to match your API endpoint
+		const response = await fetch("http://localhost:8082/api/modarticle"); // Update the URL to match your API endpoint
 		if (!response.ok) {
 			throw new Error("Failed to fetch articles");
 		}
