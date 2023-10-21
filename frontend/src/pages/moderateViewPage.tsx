@@ -51,13 +51,56 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 	};
 
 	// Function to add an article to the main database
-	const handleAddArticle = async () => {
-		console.log("adding article");
-	};
+	const handleAddArticle = async (articleData: ArticlesInterface) => {
+		try {
+		  const response = await fetch("http://localhost:8082/api/article/add/" + articleData.title, {
+			method: "POST",
+			headers: {
+			  "Content-Type": "application/json",
+			},
+			body: JSON.stringify(articleData),
+		  });
+	  
+		  if (response.ok) {
+			const data = await response.json();
+			if (data.msg === "Article added successfully") {
+			  console.log("Article added successfully");
+			  handleDeleteArticle(articleData.title);
+			  window.location.reload();
+			  alert("Article added successfully");
+			} else if (data.msg === "Article already exists") {
+			  alert("Article already exists");
+			}
+		  } else {
+			console.error("Failed to add the article");
+			alert("Something went wrong, please try again!");
+		  }
+		} catch (error) {
+		  console.error(error);
+		}
+	  };
+	  
+	  
+	  
 	
-	// Function to delete an article by ID
-	const handleDeleteArticle = async () => {
-		console.log("deleting article");
+	// Function to delete an article
+	const handleDeleteArticle = async (articleTitle: string) => {
+		try {
+			const response = await fetch(`http://localhost:8082/api/modarticle/delete/${articleTitle}`, {
+			  method: "DELETE",
+			});
+			if (response.ok) {
+
+			  console.log("Article deleted successfully");
+			  window.location.reload();
+			  alert("Article added successfully");
+			} else {
+			  console.error("Failed to delete the article");
+			  alert("Something wrong, please try again!");
+			}
+		  } catch (error) {
+			console.error(error);
+		  }
 	};
 
 	return (
@@ -70,13 +113,12 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		  <SortableTable
 			headers={headers}
 			data={searchResults.length ? searchResults : articles}
-			// Render Add and Delete buttons in the last column
 			renderCell={(article, key) => {
 			  if (key === "actions") {
 				return (
 				  <div style={{display: "flex", justifyContent: "space-evenly"}}>
-					<button className={styles.addButton} onClick={() => handleAddArticle()}>Add</button>
-					<button className={styles.deleteButton} onClick={() => handleDeleteArticle()}>Delete</button>
+					<button className={styles.addButton} onClick={() => handleAddArticle(article)}>Add</button>
+					<button className={styles.deleteButton} onClick={() => handleDeleteArticle(article.title)}>Delete</button>
 				  </div>
 				);
 			  }
