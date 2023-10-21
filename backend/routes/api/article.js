@@ -34,30 +34,14 @@ router.get("/article/search", async (req, res) => {
 	}
 });
 
-// Add an article to the main database
-router.post("/article/add/:title", async (req, res) => {
-  const title = req.params.title; // Retrieve the article title from the URL parameter
-  const articleData = req.body; // Retrieve article data from the request body
-
-  try {
-    const existingArticle = await Article.findOne({ title });
-
-    if (existingArticle) {
-      return res.json({ msg: "Article already exists", article: existingArticle });
-    }
-
-    const newArticle = new Article(articleData);
-    
-    newArticle.title = title;
-
-    await newArticle.save();
-
-    res.json({ msg: "Article added successfully", article: newArticle });
-  } catch (err) {
-    console.error(err);
-    res.status(400).json({ error: "Unable to add this article" });
-  }
+// Add a new article
+router.post("/article/", async (req, res) => {
+	try {
+		const article = await Article.create(req.body);
+		res.json({ msg: "Article added successfully", article });
+	} catch (err) {
+		console.error(err);
+		res.status(400).json({ error: "Unable to add this article" });
+	}
 });
-  
-  
 module.exports = router;

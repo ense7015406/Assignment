@@ -4,7 +4,6 @@ import styles from "./SortableTable.module.scss";
 interface SortableTableProps {
 	headers: { key: string; label: string }[];
 	data: any[];
-	renderCell?: (item: any, key: any) => React.ReactNode; // Make renderCell optional
 }
 
 const showCheckBoxes = (id : any) =>{
@@ -104,9 +103,9 @@ const sortByColumn = (para: number) => {
 	sortByColumnNumber = para;
 };
 
-const SortableTable: React.FC<SortableTableProps> = ({ headers, data, renderCell }) => (
+const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
 	<div className={styles["table-container"]} id="table">
-	  <div className={styles["dropdown-check-list"]} key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
+		<div className={styles["dropdown-check-list"]} key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
 			<span className={styles["anchor"]} key="filter-span" onClick={()=> showCheckBoxes("checklist")}>
 				Hide Columns
 			</span>
@@ -120,29 +119,27 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data, renderCell
 				))}
 			</ul>
 		</div>
-	  <table className={styles.table} id="tableContent">
-		<thead>
-		  <tr>
-			{headers.map((header, index) => (
-			  <th key={header.key} id={"" + index} onClick={() => sortByColumn(index)}>
-				{header.label}
-			  </th>
-			))}
-		  </tr>
-		</thead>
-		<tbody>
-		  {data.map((row, i) => (
-			<tr key={i}>
-			  {headers.map((header) => (
-				<td key={header.key}>
-				  {renderCell ? renderCell(row, header.key) : row[header.key]}
-				</td>
-			  ))}
-			</tr>
-		  ))}
-		</tbody>
-	  </table>
+		<table className={styles.table} id="tableContent">
+			<thead>
+				<tr>
+					{headers.map((header, index) => (
+						<th key={header.key} id={"" + index} onClick={() => sortByColumn(index)}>
+							{header.label}
+						</th>
+					))}
+				</tr>
+			</thead>
+			<tbody>
+				{data.map((row, i) => (
+					<tr key={i}>
+						{headers.map((header) => (
+							<td key={header.key}>{row[header.key]}</td>
+						))}
+					</tr>
+				))}
+			</tbody>
+		</table>
 	</div>
-  );
-  
-  export default SortableTable;
+);
+
+export default SortableTable;
