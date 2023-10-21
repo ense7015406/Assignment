@@ -29,4 +29,38 @@ router.post("/modarticle/", async (req, res) => {
 	}
 });
 
+// Search an article based on Title, Author and Pub Year
+router.get("/modarticle/search", async (req, res) => {
+
+	const query = req.query.q; // Retrieve the search query from the request query parameters
+
+	try {
+		const searchResults = await Article.find({
+			$or: [{ title: { $regex: query, $options: "i" } }, { authors: { $regex: query, $options: "i" } }, { pubyear: { $regex: query, $options: "i" } }],
+		});
+		res.json(searchResults);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ error: "An error occurred while searching for articles" });
+	}
+});
+
+// Delete an article by title
+router.delete("/modarticle/delete/:title", async (req, res) => {
+	const title = req.params.title; // Retrieve the article title from the URL parameter
+  
+	try {
+	  const deletedArticle = await Article.findOneAndDelete({ title });
+  
+	  if (!deletedArticle) {
+		return res.status(404).json({ error: "Article not found" });
+	  }
+  
+	  res.json({ msg: "Article deleted successfully" });
+	} catch (err) {
+	  console.error(err);
+	  res.status(500).json({ error: "An error occurred while deleting the article" });
+	}
+  });
+
 module.exports = router;
