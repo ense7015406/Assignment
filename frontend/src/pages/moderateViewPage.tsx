@@ -69,7 +69,7 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 		  </div>
 		  <SortableTable
 			headers={headers}
-			data={searchResults.length > 0 ? searchResults : articles}
+			data={searchResults.length ? searchResults : articles}
 			// Render Add and Delete buttons in the last column
 			renderCell={(article, key) => {
 			  if (key === "actions") {
