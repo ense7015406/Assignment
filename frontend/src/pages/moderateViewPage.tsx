@@ -2,6 +2,7 @@ import { GetServerSideProps, NextPage } from "next";
 import React, { useState } from "react";
 import SortableTable from "../components/table/SortableTable";
 import SearchArticles from "../components/searchBar/SearchBar";
+import styles from "../../styles/HomePage.module.scss";
 
 interface ArticlesInterface {
 	title: string;
@@ -51,14 +52,13 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 
 	// Function to add an article to the main database
 	const handleAddArticle = async () => {
-		
-	  };
-  
+		console.log("adding article");
+	};
+	
 	// Function to delete an article by ID
 	const handleDeleteArticle = async () => {
-		
+		console.log("deleting article");
 	};
-
 
 	return (
 		<div className="container">
@@ -74,9 +74,9 @@ const Articles: NextPage<ArticlesProps> = ({ articles }) => {
 			renderCell={(article, key) => {
 			  if (key === "actions") {
 				return (
-				  <div>
-					<button onClick={() => handleAddArticle()}>Add</button>
-					<button onClick={() => handleDeleteArticle()}>Delete</button>
+				  <div style={{display: "flex", justifyContent: "space-evenly"}}>
+					<button className={styles.addButton} onClick={() => handleAddArticle()}>Add</button>
+					<button className={styles.deleteButton} onClick={() => handleDeleteArticle()}>Delete</button>
 				  </div>
 				);
 			  }
