@@ -160,7 +160,11 @@ const NewDiscussion = () => {
         <button className={formStyles.submitButton} type="submit">
           Submit
         </button>
-        <input type="file" name="bibtexFile" accept=".bib" onChange={handleBibtexFileChange}></input>
+
+        <label htmlFor="bib" className={formStyles.fileUploadButton}>
+          Upload
+        </label>
+        <input type="file" name="bibtexFile" id = "bib" accept=".bib" onChange={handleBibtexFileChange}></input>
       </form>
     </div>
   );
