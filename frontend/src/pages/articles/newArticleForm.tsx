@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import formStyles from "../../../styles/Form.module.scss";
+const bibtexParse = require("bibtex-parser");
 
 const NewDiscussion = () => {
   const [title, setTitle] = useState("");
@@ -11,7 +12,6 @@ const NewDiscussion = () => {
   const [pubyear, setPubYear] = useState<number>(0);
   const [doi, setDoi] = useState("");
   const [claim, setClaim] = useState("");
-  const [bibtexFile, setBibtexFile] = useState<File | null>(null);
 
   const formatAuthors = (authorsArray: string[]): string => {
     return authorsArray.join(", ");
@@ -74,10 +74,38 @@ const NewDiscussion = () => {
   };
 
   const handleBibtexFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		if (event.target.files && event.target.files[0]) {
-		  setBibtexFile(event.target.files[0]);
-		}
-	};
+    const file = event.target?.files?.[0];
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onload = async (event) => {
+        const bibtexContent = event.target?.result;
+  
+        // Check if bibtexContent is not null before parsing
+        if (bibtexContent) {
+          const bibData = bibtexParse(bibtexContent);
+
+          const entryKeys = Object.keys(bibData);
+		      const firstEntry = bibData[entryKeys[0]];
+          console.log(firstEntry);
+  
+          setTitle(firstEntry?.TITLE || '');
+          setAuthors(firstEntry?.AUTHOR ? firstEntry.AUTHOR.split(",") : ['']);
+          setJournal(firstEntry?.JOURNAL || '');
+          setVolume(firstEntry?.VOLUME || '');
+          setNumber(firstEntry?.NUMBER || '');
+          setPages(firstEntry?.PAGES || '');
+          setPubYear(firstEntry?.YEAR || '');
+          setDoi(firstEntry?.DOI || '');
+        }
+      };
+  
+      // Starts reading the file.
+      reader.readAsText(file);
+    }
+  };
+
   // Return the full form
   return (
     <div className="container" style={{ textAlign: "center" }}>
