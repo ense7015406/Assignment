@@ -86,4 +86,24 @@
 			background-color: #0056b3;
 		}
 	}
+
+	input[type="file"] {
+		display: none;
+	}
+
+	.fileUploadButton {
+		padding: 10px;
+		border-radius: 5px;
+		margin-left: 10px;
+		font-size: 18px;
+		border: none;
+		outline: none;
+		color: #fff;
+		background: #20456d;
+		cursor: pointer;
+
+		&:hover {
+			background-color: #123153;
+		}
+	}
 }

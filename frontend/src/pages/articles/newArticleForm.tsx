@@ -1,5 +1,6 @@
 import { FormEvent, useState } from "react";
 import formStyles from "../../../styles/Form.module.scss";
+const bibtexParse = require("bibtex-parser");
 
 const NewDiscussion = () => {
   const [title, setTitle] = useState("");
@@ -71,6 +72,40 @@ const NewDiscussion = () => {
       })
     );
   };
+
+  const handleBibtexFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target?.files?.[0];
+  
+    if (file) {
+      const reader = new FileReader();
+  
+      reader.onload = async (event) => {
+        const bibtexContent = event.target?.result;
+  
+        // Check if bibtexContent is not null before parsing
+        if (bibtexContent) {
+          const bibData = bibtexParse(bibtexContent);
+
+          const entryKeys = Object.keys(bibData);
+		      const firstEntry = bibData[entryKeys[0]];
+          console.log(firstEntry);
+  
+          setTitle(firstEntry?.TITLE || '');
+          setAuthors(firstEntry?.AUTHOR ? firstEntry.AUTHOR.split(",") : ['']);
+          setJournal(firstEntry?.JOURNAL || '');
+          setVolume(firstEntry?.VOLUME || '');
+          setNumber(firstEntry?.NUMBER || '');
+          setPages(firstEntry?.PAGES || '');
+          setPubYear(firstEntry?.YEAR || '');
+          setDoi(firstEntry?.DOI || '');
+        }
+      };
+  
+      // Starts reading the file.
+      reader.readAsText(file);
+    }
+  };
+
   // Return the full form
   return (
     <div className="container" style={{ textAlign: "center" }}>
@@ -125,6 +160,11 @@ const NewDiscussion = () => {
         <button className={formStyles.submitButton} type="submit">
           Submit
         </button>
+
+        <label htmlFor="bib" className={formStyles.fileUploadButton}>
+          Upload
+        </label>
+        <input type="file" name="bibtexFile" id = "bib" accept=".bib" onChange={handleBibtexFileChange}></input>
       </form>
     </div>
   );
