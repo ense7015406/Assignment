@@ -3,7 +3,20 @@ import styles from "./SortableTable.module.scss";
 
 interface SortableTableProps {
 	headers: { key: string; label: string }[];
-	data: any[]
+	data: any[];
+	renderCell?: (item: any, key: any) => React.ReactNode; // Make renderCell optional
+}
+
+const showCheckBoxes = (id : any) =>{
+	var dropdown = document.getElementById(id);
+	if(dropdown != null)
+	{
+		var checkboxes = dropdown.querySelector("ul") as HTMLElement;
+		if(checkboxes != null)
+		{
+			checkboxes.style.display = checkboxes.style.display === "block" ? "none" : "block";
+		}
+	}
 }
 
 const hideColumnFunction = (para: any) => {
@@ -57,23 +70,19 @@ const hideColumnFunction = (para: any) => {
 };
 
 let sortByColumnNumber: number;
-const sortByColumn = (para : number) => {
-	if(sortByColumnNumber === para)
-	{
+const sortByColumn = (para: number) => {
+	if (sortByColumnNumber === para) {
 		location.reload();
 	}
 	const table = document.getElementById("tableContent") as HTMLTableElement;
 	let i, x, y;
 	let rows: HTMLCollectionOf<HTMLTableRowElement>;
 	let switchFlag = true;
-	while(switchFlag)
-	{
+	while (switchFlag) {
 		switchFlag = false;
 		let shouldSwitch = false;
 		rows = table.rows;
-		for(i = 1; i < rows.length - 1; i++)
-		{
-			
+		for (i = 1; i < rows.length - 1; i++) {
 			x = rows[i].getElementsByTagName("TD")[para];
 			y = rows[i + 1].getElementsByTagName("TD")[para];
 
@@ -89,19 +98,19 @@ const sortByColumn = (para : number) => {
 			and mark that a switch has been done:*/
 			rows[i].parentNode?.insertBefore(rows[i + 1], rows[i]);
 			switchFlag = true;
-		}	
+		}
 	}
 
 	sortByColumnNumber = para;
 };
 
-const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
+const SortableTable: React.FC<SortableTableProps> = ({ headers, data, renderCell }) => (
 	<div className={styles["table-container"]} id="table">
-		<div className="dropdown-check-list" key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
-			<span className="anchor" key="filter-span">
+	  <div className={styles["dropdown-check-list"]} key="filter" id="checklist" onChange={() => hideColumnFunction("checklist")}>
+			<span className={styles["anchor"]} key="filter-span" onClick={()=> showCheckBoxes("checklist")}>
 				Hide Columns
 			</span>
-			<ul className="items">
+			<ul className={styles["items"]} >
 				{headers.map((header, index) => (
 					<li key={header.key}>
 						<input type="checkbox" key={header.key} value={header.key} id={"" + index++} />
@@ -111,25 +120,29 @@ const SortableTable: React.FC<SortableTableProps> = ({ headers, data }) => (
 				))}
 			</ul>
 		</div>
-		<table className={styles.table} id="tableContent">
-			<thead>
-				<tr>
-					{headers.map((header, index) => (
-					<th key={header.key} id={"" + index} onClick={() => sortByColumn(index)}>{header.label}</th>
-					))}
-				</tr>
-			</thead>
-			<tbody>
-				{data.map((row, i) => (
-					<tr key={i}>
-						{headers.map((header) => (
-							<td key={header.key}>{row[header.key]}</td>
-						))}
-					</tr>
-				))}
-			</tbody>
-		</table>
+	  <table className={styles.table} id="tableContent">
+		<thead>
+		  <tr>
+			{headers.map((header, index) => (
+			  <th key={header.key} id={"" + index} onClick={() => sortByColumn(index)}>
+				{header.label}
+			  </th>
+			))}
+		  </tr>
+		</thead>
+		<tbody>
+		  {data.map((row, i) => (
+			<tr key={i}>
+			  {headers.map((header) => (
+				<td key={header.key}>
+				  {renderCell ? renderCell(row, header.key) : row[header.key]}
+				</td>
+			  ))}
+			</tr>
+		  ))}
+		</tbody>
+	  </table>
 	</div>
-);
-
-export default SortableTable;
+  );
+  
+  export default SortableTable;

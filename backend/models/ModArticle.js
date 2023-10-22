@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
-const ArticleSchema = new mongoose.Schema({
+const ModArticleSchema = new mongoose.Schema({
 	title: {
 		type: String,
 		required: true,
 	},
 	authors: {
-		type: String,
+		type: String, // Assuming authors is an array of strings
 		required: true,
 	},
 	journal: {
@@ -38,4 +38,4 @@ const ArticleSchema = new mongoose.Schema({
 	},
 });
 
-module.exports = Article = mongoose.model("Article", ArticleSchema);
+module.exports = ModArticle = mongoose.model("ModArticle", ModArticleSchema);
